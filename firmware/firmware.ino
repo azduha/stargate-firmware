@@ -23,6 +23,10 @@ int state = -2;
 // 1 - Selecting
 // 2 - Starting
 // 3 - Started
+int temp1 = 0;
+int temp2 = 0;
+int temp3 = 0;
+int temp4 = 0;
 
 int notHeld = 0;
 
@@ -190,14 +194,32 @@ void loop() {
     Serial.print(symbols[4]); Serial.print(", ");
     Serial.print(symbols[5]); Serial.print(", ");
     Serial.print(symbols[6]); Serial.println("");
+
     if (symbols[0] == 13 && symbols[1] == 14 && symbols[2] == 15 && symbols[3] == 16 && symbols[4] == 17 && symbols[5] == 18 && symbols[6] == 19) {
+      // Party mód
       state = 5;
       progress = 0;
     }
 
     if (symbols[0] == 23 && symbols[1] == 27 && symbols[2] == 3 && symbols[3] == 7 && symbols[4] == 11 && symbols[5] == 15 && symbols[6] == 19) {
+      // Duhová brána
       state = 6;
       progress = 0;
+    }
+
+    if (symbols[0] == 19 && symbols[1] == 13 && symbols[2] == 15 && symbols[3] == 26 && symbols[4] == 18 && symbols[5] == 14 && symbols[6] == 8) {
+      // Kiki sekvence
+      state = 7;
+      progress = 0;
+    }
+
+    if (symbols[0] == 16 && symbols[1] == 21 && symbols[2] == 23 && symbols[3] == 0 && symbols[4] == 4 && symbols[5] == 8 && symbols[6] == 13) {
+      // Kubulec sekvence
+      state = 8;
+      progress = 0;
+      temp1 = 13;
+      temp2 = 100;
+      ptr = 10;
     }
   }
   if (state == 5) {
@@ -244,6 +266,49 @@ void loop() {
 
   if (state == 6) {
     strip.rainbow(256 * progress);
+  }
+
+  if (state == 7) {
+    for (int i = 0; i < SYMBOLS; i++) {
+      if (i <= 5 || i >= 22 || i == 10 || i == 17 || ((i == 16 || i == 11) && ((progress % 10000 > 100 && progress % 10000 < 200) || (progress % 10000 > 300)))) {
+        strip.setPixelColor(i * 2 + 0, strip.Color(39, 175, 196));
+        strip.setPixelColor(i * 2 + 1, strip.Color(39, 175, 196));
+        strip.setPixelColor(i + CONTROLLER_OFFSET, strip.Color(39, 175, 196));
+      } else {
+        strip.setPixelColor(i * 2 + 0, strip.Color(0, 0, 0));
+        strip.setPixelColor(i * 2 + 1, strip.Color(0, 0, 0));
+        strip.setPixelColor(i + CONTROLLER_OFFSET, strip.Color(0, 0, 0));
+      }
+    }
+
+    if (progress % 10000 == 0) {
+      progress = 0;
+    }
+  }
+
+  if (state == 8) {
+    if (ptr > 10) temp2++;
+    if (ptr < 10) temp2--;
+    ptr = 10;
+
+    if (progress >= temp2) {
+      temp1--;
+      if (temp1 < 0) {
+        temp1 += SYMBOLS;
+      }
+      progress = 0;
+    }
+    for (int i = 0; i < SYMBOLS; i++) {
+      if (i == temp1) {
+        strip.setPixelColor(i * 2 + 0, strip.Color(230, 200, 11));
+        strip.setPixelColor(i * 2 + 1, strip.Color(230, 200, 11));
+        strip.setPixelColor(i + CONTROLLER_OFFSET, strip.Color(230, 200, 11));
+      } else {
+        strip.setPixelColor(i * 2 + 0, strip.Color(0, 0, 0));
+        strip.setPixelColor(i * 2 + 1, strip.Color(0, 0, 0));
+        strip.setPixelColor(i + CONTROLLER_OFFSET, strip.Color(0, 0, 0));
+      }
+    }
   }
 
 
