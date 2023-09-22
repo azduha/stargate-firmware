@@ -202,19 +202,22 @@ void loop() {
     }
 
     if (symbols[0] == 23 && symbols[1] == 27 && symbols[2] == 3 && symbols[3] == 7 && symbols[4] == 11 && symbols[5] == 15 && symbols[6] == 19) {
-      // Duhová brána
+      // Duhová brána      
+      // Added 2023-09-22 21:38
       state = 6;
       progress = 0;
     }
 
     if (symbols[0] == 19 && symbols[1] == 13 && symbols[2] == 15 && symbols[3] == 26 && symbols[4] == 18 && symbols[5] == 14 && symbols[6] == 8) {
       // Kiki sekvence
+      // Added 2023-09-23 00:54
       state = 7;
       progress = 0;
     }
 
     if (symbols[0] == 16 && symbols[1] == 21 && symbols[2] == 23 && symbols[3] == 0 && symbols[4] == 4 && symbols[5] == 8 && symbols[6] == 13) {
       // Kubulec sekvence
+      // Added 2023-09-23 01:31
       state = 8;
       progress = 0;
       temp1 = 13;
