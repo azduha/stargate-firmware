@@ -194,6 +194,11 @@ void loop() {
       state = 5;
       progress = 0;
     }
+
+    if (symbols[0] == 23 && symbols[1] == 27 && symbols[2] == 3 && symbols[3] == 7 && symbols[4] == 11 && symbols[5] == 15 && symbols[6] == 19) {
+      state = 6;
+      progress = 0;
+    }
   }
   if (state == 5) {
     int modes = 10;
@@ -235,6 +240,10 @@ void loop() {
     if (ptr % modes == 9) {
       theaterChaseRainbow(50);
     }
+  }
+
+  if (state == 6) {
+    strip.rainbow(256 * progress);
   }
 
 
